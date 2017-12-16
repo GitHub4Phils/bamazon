@@ -1,5 +1,5 @@
 # bamazon
-##node application like Amazon
+## node application like Amazon
 
 the user is shown a list of products from the database,
 ![show list of products](/screen1.png)
