@@ -1,10 +1,13 @@
 # bamazon
-node application like Amazon
+##node application like Amazon
 
-## the user is shown a list of products from the database,
-![first screen](/screen1.png)
+the user is shown a list of products from the database,
+![show list of products](/screen1.png)
 
-## the user is then asked to enter the product id
-## and the quantity
+the user is then asked to enter the product id
+and the quantity
 
-![screen 2](screen2.png)
+![ask user to enter id and qty](screen2.png)
+
+the user is then given the total amount 
+![screen 3](screen3.png)
