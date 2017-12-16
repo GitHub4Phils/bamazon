@@ -9,6 +9,6 @@ and the quantity
 
 ![ask user to enter id and qty](screen2.png)
 
-the user is then given the total amount 
+the user is then given the total amount and then asked what the user wants to do next, either try to enter a new product or quit the program
 
 ![show total](screen3.png)
