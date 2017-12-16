@@ -10,4 +10,5 @@ and the quantity
 ![ask user to enter id and qty](screen2.png)
 
 the user is then given the total amount 
-![screen 3](screen3.png)
+
+![show total](screen3.png)
