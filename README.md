@@ -51,3 +51,7 @@ Add to Inventory - User enters Product ID and quantity to add to current invento
 Add new product - The user enters all the information about the new product that will be added
 
 ![add new product](/manview6.png)
+
+New product added to the list:
+
+![add new product](/manview7.png)
