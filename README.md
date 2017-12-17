@@ -31,15 +31,23 @@ In the Manager module, managers can:
 1. add new product for sale
 
 Show Manager Selection:
+
 ![show items managers can do](/manview1.png)
+
 Show all items for sale:
+
 ![show all items for sale](/manview2.png)
 
 Show Low Inventory - any items with quantity less than five
+
 ![show low inventory](/manview3.png)
+
 Add to Inventory - User enters Product ID and quantity to add to current inventory
+
 ![add to inventory](/manview4.png)
 
 ![display again](/manview5.png)
+
 Add new product - The user enters all the information about the new product that will be added
+
 ![add new product](/manview6.png)
