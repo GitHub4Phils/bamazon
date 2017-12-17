@@ -99,9 +99,9 @@ function endConnection(){
 };
 
 function showHeader(){
-  console.log("====================================================");
-  console.log("       WELCOME TO BAMAZON MANAGER SECTION           ");
-  console.log("====================================================");
+    console.log("===========================================================================");
+  console.log("                 WELCOME TO BAMAZON MANAGER SECTION           ");
+    console.log("===========================================================================");
 
 }//end showHeader
 
@@ -126,9 +126,10 @@ function showSelection(){
 
               })
         .then(function(answer){
-              switch (answer.next) {
+              switch (answer.options) {
                 case "View Products for Sale":
                   //showproducts
+                  showProductHeader();
                   showProducts();
                   break;
                 case "View Low Inventory":
@@ -152,5 +153,147 @@ function showSelection(){
 
 
 }//end showHeader function
+
+function showProductHeader(){
+
+  console.log("===========================================================================");
+  console.log("|| PRODUCT || QUANTITY  ||                                   ||          || ");
+  console.log("|| NUMBER  || IN STOCK  || ITEM NAME                         || PRICE    ||");
+  console.log("===========================================================================");
+}// end showProductHeader
+
+function showProducts(){
+
+  connection.query("SELECT * FROM products ORDER BY item_id", function(err, res) {
+      //=========START SHOWING THE LIST OF ITEMS FOR SALE  
+        for (var i = 0; i < res.length; i++){
+            console.log("||      "+res[i].item_id+ " || "+res[i].stock_quantity +"         ||"+ res[i].product_brandname + " "+ res[i].product_name +" "+res[i].product_color+" ||  $"+res[i].price.toFixed(2)+ " || "  );
+        }//end for loop
+
+        console.log("===========================================================================");
+        showSelection();
+        //console.log(res);
+
+      });//end connection.query
+
+}//end showProducts
+
+function viewLowInventory(){
+
+  connection.query("SELECT * FROM products WHERE stock_quantity < 5 ORDER BY item_id", function(err, res) {
+      //if there is none to show
+
+      if (res.length >0){
+
+    console.log("===========================================================================");
+    console.log("                LIST OF LOW INVENTORY");
+    showProductHeader();
+      //=========START SHOWING THE LIST OF ITEMS with quantity under 5 
+        for (var i = 0; i < res.length; i++){
+            console.log("||      "+res[i].item_id+ " || "+res[i].stock_quantity +"         ||"+ res[i].product_brandname + " "+ res[i].product_name +"||  $"+res[i].price.toFixed(2)+ " || "  );
+        }//end for loop
+
+        console.log("===========================================================================");
+        showSelection();
+        //console.log(res);
+      } else{
+        console.log("All stock is good!");
+
+        showSelection();
+      }
+  });//end connection.query
+}//end viewLowInventory
+
+function addInventory(){
+  //showHeader();
+  //showProducts();
+  inquirer.prompt([{
+                name:"itemID",
+                type:"input",
+                message: "Enter Product ID to add inventory:",
+
+              },
+                {
+                name:"newQty",
+                type:"input",
+                message:"Enter quantity you would like to add to stock:",
+              }
+              ])
+        .then(function(answer){
+            var newQry = "SELECT stock_quantity FROM products WHERE item_id="+answer.itemID;
+            //console.log(newQry);
+            connection.query(newQry, function(err, res) {
+            var oldQty = res[0].stock_quantity;
+            var newQtyUpdate = parseInt(oldQty) + parseInt(answer.newQty);
+            console.log("Inventory Added/Updated!")
+            //connection.query();
+            newQry = "UPDATE products SET stock_quantity="+newQtyUpdate+" WHERE item_id="+answer.itemID;
+            connection.query(newQry, function(err, res) {});
+            //console.log(newQry);
+
+          });
+            showProducts();
+            //showSelection();
+          });//end then function
+            //connection.query();
+}//end addInventory
+
+function addProduct(){
+  inquirer.prompt([{
+                name:"itemdept",
+                type:"input",
+                message: "Enter Department Where the Product belongs (category):",
+
+              },{
+                name:"itembrand",
+                type:"input",
+                message: "Enter Brand name for the Product to add inventory:",
+
+              },
+                {
+                name:"itemdesc",
+                type:"input",
+                message:"Enter full description of the item:",
+              },
+                {
+                name:"itemcolor",
+                type:"input",
+                message:"Enter color:",
+              },
+                {
+                name:"itemprice",
+                type:"input",
+                message:"Enter the unit price of the item:",
+              },
+                {
+                name:"itemstock",
+                type:"input",
+                message:"Enter quantity of the item in stock:",
+              }
+              ])
+        .then(function(answer){
+            //var newSQL="INSERT INTO products ";
+
+            connection.query('INSERT INTO products SET ?', 
+              {
+                product_brandname: answer.itembrand,
+                product_name: answer.itemdesc,
+                product_color: answer.itemcolor,
+                department_name: answer.itemdept,
+                price: answer.itemprice,
+                stock_quantity: answer.itemstock
+
+              }, function (error, results, fields) {
+              if (error) throw error;
+              console.log("========================================");
+              console.log("NEW ITEM ADDED with ID: "+results.insertId);
+              console.log("========================================");
+
+            });
+            //connection.query(newSQL, function(err, res) {});
+            showSelection();
+        });
+
+}//end addProduct
 
 
